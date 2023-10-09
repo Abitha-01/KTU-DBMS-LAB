@@ -1,0 +1,787 @@
+student@admin:~/Desktop/abitha$ sudo mysql -u root -p
+[sudo] password for student: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 33
+Server version: 8.0.34-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| DB13               |
+| DB56               |
+| DB62               |
+| abdul              |
+| db                 |
+| db11               |
+| db17               |
+| employee           |
+| exam               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+13 rows in set (0.03 sec)
+
+mysql> create database abitha;
+Query OK, 1 row affected (0.14 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| DB13               |
+| DB56               |
+| DB62               |
+| abdul              |
+| abitha             |
+| db                 |
+| db11               |
+| db17               |
+| employee           |
+| exam               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> use abitha;
+Database changed
+mysql> create table EMPLOYEE(ID varchar(5), DEPT_ID int(2), NAME varchar(15),DESIGN varchar(15), BASIC int, GENDER varchar(1));
+Query OK, 0 rows affected, 1 warning (0.57 sec)
+
+mysql> view table EMPLOYEE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'view table EMPLOYEE' at line 1
+mysql> show tables;
++------------------+
+| Tables_in_abitha |
++------------------+
+| EMPLOYEE         |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('101','1','RAM','TYPIST','2000','M'),
+    -> ('102','2','ARUN','ANALYST','6000','M'),
+    -> ('121','1','RUBY','TYPIST','2010','F'),
+    -> ('156','3','MARY','MANAGER',4500','F'),
+    '> ('123','2','MRIDULA','ANALYST','6000','F'),
+    '> ('114','4','MENON','CLERK','1500','M'),
+    '> ('115','4','TIM','CLERK','1500','M'),
+    '> ('127','2','KIRAN','MANAGER','4000','M');
+    '> ^CCLEAR
+CLEAR
+^C
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_abitha |
++------------------+
+| EMPLOYEE         |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('101',1,'RAM','TYPIST',2000,'M');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('102',2,'ARUN','ANALYST',6000,'M');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('121',1,'RUBY','TYPIST',6000,'F');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('156',3,'MARY','MANAGER',4500,'F');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('123',2,'MRIDULA','ANALYST',6000,'F');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('114',4,'MENON','CLERK',6000,'M');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('115',4,'TIM','CLERK',1500,'M');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('127',2,'KIRAN','CLERK',4000,'M');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> SELECT*FROM EMPLOYEE;
++------+---------+---------+---------+-------+--------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER |
++------+---------+---------+---------+-------+--------+
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      |
+| 121  |       1 | RUBY    | TYPIST  |  6000 | F      |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      |
+| 114  |       4 | MENON   | CLERK   |  6000 | M      |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      |
+| 127  |       2 | KIRAN   | CLERK   |  4000 | M      |
++------+---------+---------+---------+-------+--------+
+8 rows in set (0.00 sec)
+
+mysql> USE abitha;
+Database changed
+mysql> UPDATE EMPLOYEE SET DESIGN='MANAGER' WHERE ID=127;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEE;
++------+---------+---------+---------+-------+--------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER |
++------+---------+---------+---------+-------+--------+
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      |
+| 121  |       1 | RUBY    | TYPIST  |  6000 | F      |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      |
+| 114  |       4 | MENON   | CLERK   |  6000 | M      |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      |
++------+---------+---------+---------+-------+--------+
+8 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET BASIC=1500 WHERE ID=114;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET BASIC=2010 WHERE ID=121;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEE;
++------+---------+---------+---------+-------+--------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER |
++------+---------+---------+---------+-------+--------+
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      |
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      |
++------+---------+---------+---------+-------+--------+
+8 rows in set (0.00 sec)
+
+mysql> DESC EMPLYEE;
+ERROR 1146 (42S02): Table 'abitha.EMPLYEE' doesn't exist
+mysql> desc EMPLOYEE;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| ID      | varchar(5)  | YES  |     | NULL    |       |
+| DEPT_ID | int         | YES  |     | NULL    |       |
+| NAME    | varchar(15) | YES  |     | NULL    |       |
+| DESIGN  | varchar(15) | YES  |     | NULL    |       |
+| BASIC   | int         | YES  |     | NULL    |       |
+| GENDER  | varchar(1)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT ID,NAME,DESIGN,BASIC FROM EMPLOYEE;
++------+---------+---------+-------+
+| ID   | NAME    | DESIGN  | BASIC |
++------+---------+---------+-------+
+| 101  | RAM     | TYPIST  |  2000 |
+| 102  | ARUN    | ANALYST |  6000 |
+| 121  | RUBY    | TYPIST  |  2010 |
+| 156  | MARY    | MANAGER |  4500 |
+| 123  | MRIDULA | ANALYST |  6000 |
+| 114  | MENON   | CLERK   |  1500 |
+| 115  | TIM     | CLERK   |  1500 |
+| 127  | KIRAN   | MANAGER |  4000 |
++------+---------+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT ID,NAME FROM EMPLOYEE WHERE DEPT_ID=2;
++------+---------+
+| ID   | NAME    |
++------+---------+
+| 102  | ARUN    |
+| 123  | MRIDULA |
+| 127  | KIRAN   |
++------+---------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE ADD(HRA int(5),DA int(5),NET_SALARY int(5));
+Query OK, 0 rows affected, 3 warnings (0.34 sec)
+Records: 0  Duplicates: 0  Warnings: 3
+
+mysql> UPDATE EMPLOYEE SET HRA=1000;
+Query OK, 8 rows affected (0.09 sec)
+Rows matched: 8  Changed: 8  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET DA=BASIC*0.75;
+Query OK, 8 rows affected (0.07 sec)
+Rows matched: 8  Changed: 8  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET NET_SALARY=HRA+DA+BASIC;
+Query OK, 8 rows affected (0.08 sec)
+Rows matched: 8  Changed: 8  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEE;
++------+---------+---------+---------+-------+--------+------+------+------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY |
++------+---------+---------+---------+-------+--------+------+------+------------+
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |
++------+---------+---------+---------+-------+--------+------+------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT ID,NAME,DESIGN,DEPT_ID,BASIC FROM EMPLOYEE ORDER BY BASIC DESC;
++------+---------+---------+---------+-------+
+| ID   | NAME    | DESIGN  | DEPT_ID | BASIC |
++------+---------+---------+---------+-------+
+| 102  | ARUN    | ANALYST |       2 |  6000 |
+| 123  | MRIDULA | ANALYST |       2 |  6000 |
+| 156  | MARY    | MANAGER |       3 |  4500 |
+| 127  | KIRAN   | MANAGER |       2 |  4000 |
+| 121  | RUBY    | TYPIST  |       1 |  2010 |
+| 101  | RAM     | TYPIST  |       1 |  2000 |
+| 114  | MENON   | CLERK   |       4 |  1500 |
+| 115  | TIM     | CLERK   |       4 |  1500 |
++------+---------+---------+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE WHERE DESIGN='TYPIST';
++------+
+| NAME |
++------+
+| RAM  |
+| RUBY |
++------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEE WHERE DESIGN ='ANALYST' OR DESIGN='MANAGER';
++------+---------+---------+---------+-------+--------+------+------+------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY |
++------+---------+---------+---------+-------+--------+------+------+------------+
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |
++------+---------+---------+---------+-------+--------+------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT DESIGN FROM EMPLOYEE;
++---------+
+| DESIGN  |
++---------+
+| TYPIST  |
+| ANALYST |
+| MANAGER |
+| CLERK   |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT ID,NAME,DEPT_ID,BASIC FROM EMPLOYEE WHERE DESIGN='MANAGER' OR DESIGN='CLERK' AND BASIC BETWEEN 1400 AND 4500;
++------+-------+---------+-------+
+| ID   | NAME  | DEPT_ID | BASIC |
++------+-------+---------+-------+
+| 156  | MARY  |       3 |  4500 |
+| 114  | MENON |       4 |  1500 |
+| 115  | TIM   |       4 |  1500 |
+| 127  | KIRAN |       2 |  4000 |
++------+-------+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEE WHERE GENDER='M';
++------+---------+-------+---------+-------+--------+------+------+------------+
+| ID   | DEPT_ID | NAME  | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY |
++------+---------+-------+---------+-------+--------+------+------+------------+
+| 101  |       1 | RAM   | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |
+| 102  |       2 | ARUN  | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |
+| 114  |       4 | MENON | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |
+| 115  |       4 | TIM   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |
+| 127  |       2 | KIRAN | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |
++------+---------+-------+---------+-------+--------+------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(GENDER) FROM EMPLOYEE WHERE GENDER='M';
++---------------+
+| COUNT(GENDER) |
++---------------+
+|             5 |
++---------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT DESIGN,MAX(BASIC) FROM EMPOYEE GROUP BY DESIGN;
+ERROR 1146 (42S02): Table 'abitha.EMPOYEE' doesn't exist
+mysql> SELECT DESIGN,max(BASIC) FROM EMPOYEE GROUP BY DESIGN;
+ERROR 1146 (42S02): Table 'abitha.EMPOYEE' doesn't exist
+mysql> SELECT DESIGN,max(BASIC) FROM EMPLOYEE GROUP BY DESIGN;
++---------+------------+
+| DESIGN  | max(BASIC) |
++---------+------------+
+| TYPIST  |       2010 |
+| ANALYST |       6000 |
+| MANAGER |       4500 |
+| CLERK   |       1500 |
++---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT DESIGN,MAX(BASIC)FROM EMPLOYEE GROUP BY DESIGN;
++---------+------------+
+| DESIGN  | MAX(BASIC) |
++---------+------------+
+| TYPIST  |       2010 |
+| ANALYST |       6000 |
+| MANAGER |       4500 |
+| CLERK   |       1500 |
++---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE ADD(MANAGER_ID INT(5));
+Query OK, 0 rows affected, 1 warning (0.34 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> UPDATE EMPLOYEE SET MANAGER_ID=101 WHERE ID=102;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET MANAGER_ID=101 WHERE ID=121;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET MANAGER_ID=101 WHERE ID=156;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET MANAGER_ID=102 WHERE ID IN('123','114',115');;
+    '> UPDATE EMPLOYEE SET MANAGER_ID=102 WHERE ID IN('123','114',115');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '');;
+UPDATE EMPLOYEE SET MANAGER_ID=102 WHERE ID IN('123','114',115')' at line 1
+mysql> UPDATE EMPLOYEE SET MANAGER_ID=102 WHERE ID IN('123','114',115');;
+UPDATE EMPLOYEE SET MANAGER_ID=102 WHERE ID IN('123','114',115');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '');;
+UPDATE EMPLOYEE SET MANAGER_ID=102 WHERE ID IN('123','114',115')' at line 1
+mysql> UPDATE EMPLOYEE SET MANAGER_ID=102 WHERE ID IN('123','114',115');;
+UPDATE EMPLOYEE SET MANAGER_ID=102 WHERE ID IN('123','114','115');
+    '> ^C
+
+^C
+mysql> SELECT*FROM EMPLOYEE;
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 |
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |       NULL |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |       NULL |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |       NULL |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |       NULL |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET MANAGER_ID=102 WHERE ID=123;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET MANAGER_ID=102 WHERE ID=114;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET MANAGER_ID=102 WHERE ID=115;
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET MANAGER_ID=121 WHERE ID=121;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEE;
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 |
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        121 |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |       NULL |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT MANAGER_ID FROM EMPLOYEE WHERE NAME='RAM';
++------------+
+| MANAGER_ID |
++------------+
+|       NULL |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT E.NAME,M.NAME AS MANAGER_NAME FROM EMPLOYEE E JOIN EMPLOYEE M ON E.MANAGER_ID=M.ID;
++---------+--------------+
+| NAME    | MANAGER_NAME |
++---------+--------------+
+| MARY    | RAM          |
+| ARUN    | RAM          |
+| TIM     | ARUN         |
+| MENON   | ARUN         |
+| MRIDULA | ARUN         |
+| RUBY    | RUBY         |
++---------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET MANAGER_ID=101 WHERE ID=121;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET MANAGER_ID=121 WHERE ID=127;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEE;
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 |
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT E.NAME,M.NAME AS MANAGER_NAME FROM EMPLOYEE E JOIN EMPLOYEE M ON E.MANAGER_ID=M.ID;
++---------+--------------+
+| NAME    | MANAGER_NAME |
++---------+--------------+
+| MARY    | RAM          |
+| RUBY    | RAM          |
+| ARUN    | RAM          |
+| TIM     | ARUN         |
+| MENON   | ARUN         |
+| MRIDULA | ARUN         |
+| KIRAN   | RUBY         |
++---------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> select dept_id,avg(basic) FROM EMPLOYEE GROUP BY DEPT_ID;
++---------+------------+
+| dept_id | avg(basic) |
++---------+------------+
+|       1 |  2005.0000 |
+|       2 |  5333.3333 |
+|       3 |  4500.0000 |
+|       4 |  1500.0000 |
++---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT MAX(BASIC) FROM EMPLOYEE;
++------------+
+| MAX(BASIC) |
++------------+
+|       6000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DEPT_ID,COUNT(NAME)FROM EMPLOYEE GROUP BY DEPT_ID;
++---------+-------------+
+| DEPT_ID | COUNT(NAME) |
++---------+-------------+
+|       1 |           2 |
+|       2 |           3 |
+|       3 |           1 |
+|       4 |           2 |
++---------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE;
++---------------------------+
+| COUNT(DISTINCT (DEPT_ID)) |
++---------------------------+
+|                         4 |
++---------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DISTINCT DESIGN FROM EMPLOYEE;
++---------+
+| DESIGN  |
++---------+
+| TYPIST  |
+| ANALYST |
+| MANAGER |
+| CLERK   |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE;
++---------------------------+
+| COUNT(DISTINCT (DEPT_ID)) |
++---------------------------+
+|                         4 |
++---------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(BASIC) FROM EMPLOYEE WHERE GENDER='F';
++------------+
+| MAX(BASIC) |
++------------+
+|       6000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE WHERE GENDER='F' AND DESIGN='TYPIST';
++------+
+| NAME |
++------+
+| RUBY |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE WHERE GENDER='M' AND DESIGN='CLERK' AND BASIC>3000;
+Empty set (0.00 sec)
+
+mysql> SELECT DISTINCT DESIGN,COUNT(DESIGN) FROM EMPLOYEE GROUP BY DESIGN;
++---------+---------------+
+| DESIGN  | COUNT(DESIGN) |
++---------+---------------+
+| TYPIST  |             2 |
+| ANALYST |             2 |
+| MANAGER |             2 |
+| CLERK   |             2 |
++---------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEE WHERE DESIGN='MANAGER' OR DESIGN='ANALYST' AND DEPT_ID='2';
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEE WHERE DESIGN=('MANAGER' OR 'ANALYST') AND DEPT_ID='2';
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+3 rows in set, 10 warnings (0.00 sec)
+
+mysql> SELECT DESIGN,BASICFROM EMPLOYEE WHERE NAME='RUBY';
+ERROR 1054 (42S22): Unknown column 'DESIGN' in 'field list'
+mysql> SELECT DESIGN,BASIC FROM EMPLOYEE WHERE NAME='RUBY';
++--------+-------+
+| DESIGN | BASIC |
++--------+-------+
+| TYPIST |  2010 |
++--------+-------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE ADD(JOINING_DATE varchar(20));
+Query OK, 0 rows affected (0.37 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DROP COLUMN JOINING_DATE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COLUMN JOINING_DATE' at line 1
+mysql> ALTER TABLE EMPLOYEE DROP COLUMN JOINING_DATE;
+Query OK, 0 rows affected (0.35 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEE;
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 |
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE ADD(JOINING_DATE DATE);
+Query OK, 0 rows affected (0.39 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEE;
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL | NULL         |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 | NULL         |
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 | NULL         |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 | NULL         |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 | NULL         |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | NULL         |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | NULL         |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 | NULL         |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET DATE=01/10/2015 WHERE ID=101;
+ERROR 1054 (42S22): Unknown column 'DATE' in 'field list'
+mysql> UPDATE EMPLOYEE SET JOINING_DATE=01/10/2015 WHERE ID=101;
+ERROR 1292 (22007): Incorrect date value: '0.000049627791563275' for column 'JOINING_DATE' at row 1
+mysql> UPDATE EMPLOYEE SET JOINING_DATE='01/10/2015' WHERE ID='101';
+ERROR 1292 (22007): Incorrect date value: '01/10/2015' for column 'JOINING_DATE' at row 1
+mysql> UPDATE EMPLOYEE SET JOINING_DATE='2015/09/20' WHERE ID='101';
+Query OK, 1 row affected, 1 warning (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+mysql> ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE' at line 1
+mysql> SELECT*FROM EMPLOYEE;
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL | 2015-09-20   |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 | NULL         |
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 | NULL         |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 | NULL         |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 | NULL         |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | NULL         |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | NULL         |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 | NULL         |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET JOINING_DATE='2017/12/20' WHERE ID='102';
+Query OK, 1 row affected, 1 warning (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+mysql> UPDATE EMPLOYEE SET JOINING_DATE='2015/01/23' WHERE ID='121';
+Query OK, 1 row affected, 1 warning (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+mysql> UPDATE EMPLOYEE SET JOINING_DATE='2020/05/10' WHERE ID='156';
+Query OK, 1 row affected, 1 warning (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+mysql> UPDATE EMPLOYEE SET JOINING_DATE='2020/09/16' WHERE ID='123';
+Query OK, 1 row affected, 1 warning (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+mysql> UPDATE EMPLOYEE SET JOINING_DATE='2018/09/16' WHERE ID='114';
+Query OK, 1 row affected, 1 warning (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+mysql> UPDATE EMPLOYEE SET JOINING_DATE='2018/09/17' WHERE ID='115';
+Query OK, 1 row affected, 1 warning (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+mysql> UPDATE EMPLOYEE SET JOINING_DATE='2019/12/17' WHERE ID='127';
+Query OK, 1 row affected, 1 warning (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+mysql> SELECT*FROM EMPLOYEE;
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL | 2015-09-20   |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 | 2017-12-20   |
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 | 2015-01-23   |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 | 2020-05-10   |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 | 2020-09-16   |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-16   |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-17   |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 | 2019-12-17   |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEE ORDER BY JOINING_DATE DESC;
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 | 2020-09-16   |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 | 2020-05-10   |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 | 2019-12-17   |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-17   |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-16   |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 | 2017-12-20   |
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL | 2015-09-20   |
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 | 2015-01-23   |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET JOINING_DATE='2017/12/17' WHERE ID='101';
+Query OK, 1 row affected, 1 warning (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+mysql> SELECT*FROM EMPLOYEE ORDER BY JOINING_DATE DESC;
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 | 2020-09-16   |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 | 2020-05-10   |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 | 2019-12-17   |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-17   |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-16   |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 | 2017-12-20   |
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL | 2017-12-17   |
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 | 2015-01-23   |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEE ORDER BY JOINING_DATE INC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INC' at line 1
+mysql> SELECT*FROM EMPLOYEE ORDER BY JOINING_DATE;
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 | 2015-01-23   |
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL | 2017-12-17   |
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 | 2017-12-20   |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-16   |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-17   |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 | 2019-12-17   |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 | 2020-05-10   |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 | 2020-09-16   |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE;
++------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE;
+^C
+mysql> +------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE' at line 1
+mysql> +------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE' at line 1
+mysql> +------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE' at line 1
+mysql> +------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE' at line 1
+mysql> +------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE' at line 1
+mysql> +------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------------ELECT COUNT(DISTINCT (DEPT_ID)) FROM EMPLOYEE' at line 1
+mysql> +--------------------------------------------+
+    -> | ^C^C^C^C^C^C^C^C^C^C^C^CC
+
+

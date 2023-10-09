@@ -1,0 +1,361 @@
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'show databases' at line 2
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| DB13               |
+| DB56               |
+| DB62               |
+| abdul              |
+| abitha             |
+| ajanya             |
+| db                 |
+| db11               |
+| db17               |
+| employee           |
+| exam               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+15 rows in set (0.09 sec)
+
+mysql> use abitha
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> SELECT* FROM EMPLOYEE ORDER BY BASIC DESC;
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| ID   | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| 102  |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 | 2017-12-20   |
+| 123  |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 | 2020-09-16   |
+| 156  |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 | 2020-05-10   |
+| 127  |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 | 2019-12-17   |
+| 121  |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 | 2015-01-23   |
+| 101  |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL | 2017-12-17   |
+| 114  |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-16   |
+| 115  |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-17   |
++------+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+8 rows in set (0.02 sec)
+
+mysql> CREATE TABLE DEPARTMENT( DEPT_ID INT FOREIGN KEY REFERENCES EMPLOYEE(DEPT_ID),D_NAME VARCHAR(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FOREIGN KEY REFERENCES EMPLOYEE(DEPT_ID),D_NAME VARCHAR(20))' at line 1
+mysql> CREATE TABLE DEPARTMENT( DEPT_ID int FOREIGN KEY REFERENCES EMPLOYEE(DEPT_ID),D_NAME varchar(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FOREIGN KEY REFERENCES EMPLOYEE(DEPT_ID),D_NAME varchar(20))' at line 1
+mysql> CREATE TABLE DEPARTMENT( DEPT_ID int,D_NAME varchar(20));
+Query OK, 0 rows affected (1.01 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_abitha |
++------------------+
+| DEPARTMENT       |
+| EMPLOYEE         |
++------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM DEPARTMENT
+    -> SELECT*FROM DEPARTMENT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT*FROM DEPARTMENT' at line 2
+mysql> SELECT*FROM DEPARTMENT;
+Empty set (0.00 sec)
+
+mysql> ADD FOREIGN KEY(DEPT_ID) REFERENCES EMPLOYEE(DEPT_ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ADD FOREIGN KEY(DEPT_ID) REFERENCES EMPLOYEE(DEPT_ID)' at line 1
+mysql> ADD FOREIGN KEY DEPARTMENT(DEPT_ID) REFERENCES EMPLOYEE(DEPT_ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ADD FOREIGN KEY DEPARTMENT(DEPT_ID) REFERENCES EMPLOYEE(DEPT_ID)' at line 1
+mysql> ADD FOREIGNKEY DEPARTMENT(DEPT_ID) REFERENCES EMPLOYEE(DEPT_ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ADD FOREIGNKEY DEPARTMENT(DEPT_ID) REFERENCES EMPLOYEE(DEPT_ID)' at line 1
+mysql> ADD FOREIGNKEY (DEPT_ID) REFERENCES EMPLOYEE(DEPT_ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ADD FOREIGNKEY (DEPT_ID) REFERENCES EMPLOYEE(DEPT_ID)' at line 1
+mysql> ADD FOREIGN KEY (DEPT_ID) REFERENCES EMPLOYEE(DEPT_ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ADD FOREIGN KEY (DEPT_ID) REFERENCES EMPLOYEE(DEPT_ID)' at line 1
+mysql> DROP TABLE DEPARTMENT;
+Query OK, 0 rows affected (0.45 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_abitha |
++------------------+
+| EMPLOYEE         |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE DEPARTMENT(DEPT_ID INT PRIMARY KEY,D_NAME VARCHAR(20));
+Query OK, 0 rows affected (0.59 sec)
+
+mysql> DESC DEPARTMENT;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| DEPT_ID | int         | NO   | PRI | NULL    |       |
+| D_NAME  | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE ADD FOREIGN KEY DEPT_ID REFERENCES DEPARTMENT(DEPT_ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'REFERENCES DEPARTMENT(DEPT_ID)' at line 1
+mysql> ALTER TABLE EMPLOYEE ADD FOREIGN KEY (DEPT_ID) REFERENCES DEPARTMENT(DEPT_ID);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`abitha`.`#sql-3f5_8`, CONSTRAINT `EMPLOYEE_ibfk_1` FOREIGN KEY (`DEPT_ID`) REFERENCES `DEPARTMENT` (`DEPT_ID`))
+mysql> ALTER TABLE EMPLOYEE ADD FOREIGN KEY (DEPT_ID) REFERENCES DEPARTMENT;
+ERROR 1239 (42000): Incorrect foreign key definition for 'foreign key without name': Key reference and table reference don't match
+mysql> ALTER TABLE EMPLOYEE ADD FOREIGN KEY (DEPT_ID) REFERENCES DEPARTMENT(DEPT_ID);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`abitha`.`#sql-3f5_8`, CONSTRAINT `EMPLOYEE_ibfk_1` FOREIGN KEY (`DEPT_ID`) REFERENCES `DEPARTMENT` (`DEPT_ID`))
+mysql> 
+mysql> DESC EMPLOYEE;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| ID           | varchar(5)  | YES  |     | NULL    |       |
+| DEPT_ID      | int         | YES  |     | NULL    |       |
+| NAME         | varchar(15) | YES  |     | NULL    |       |
+| DESIGN       | varchar(15) | YES  |     | NULL    |       |
+| BASIC        | int         | YES  |     | NULL    |       |
+| GENDER       | varchar(1)  | YES  |     | NULL    |       |
+| HRA          | int         | YES  |     | NULL    |       |
+| DA           | int         | YES  |     | NULL    |       |
+| NET_SALARY   | int         | YES  |     | NULL    |       |
+| MANAGER_ID   | int         | YES  |     | NULL    |       |
+| JOINING_DATE | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+11 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE ADD PRIMARY KEY(ID);
+Query OK, 0 rows affected (1.28 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEE;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| ID           | varchar(5)  | NO   | PRI | NULL    |       |
+| DEPT_ID      | int         | YES  |     | NULL    |       |
+| NAME         | varchar(15) | YES  |     | NULL    |       |
+| DESIGN       | varchar(15) | YES  |     | NULL    |       |
+| BASIC        | int         | YES  |     | NULL    |       |
+| GENDER       | varchar(1)  | YES  |     | NULL    |       |
+| HRA          | int         | YES  |     | NULL    |       |
+| DA           | int         | YES  |     | NULL    |       |
+| NET_SALARY   | int         | YES  |     | NULL    |       |
+| MANAGER_ID   | int         | YES  |     | NULL    |       |
+| JOINING_DATE | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+11 rows in set (0.01 sec)
+
+mysql> ALTER TABLE EMPLOYEE ADD FOREIGN KEY (DEPT_ID) REFERENCES DEPARTMENT(DEPT_ID);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`abitha`.`#sql-3f5_8`, CONSTRAINT `EMPLOYEE_ibfk_1` FOREIGN KEY (`DEPT_ID`) REFERENCES `DEPARTMENT` (`DEPT_ID`))
+mysql> ALTER TABLE EMPLOYEE ADD FOREIGN KEY (DEPT_ID) REFERENCES DEPARTMENT(REFERNCING DEPT_ID IN DEPARTMENT);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DEPT_ID IN DEPARTMENT)' at line 1
+mysql> INSERT INTO DEPARTMENT VALUES(1,'DESGN');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> SELECT*FROM DEPARTMENT;
++---------+--------+
+| DEPT_ID | D_NAME |
++---------+--------+
+|       1 | DESGN  |
++---------+--------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO DEPARTMENT VALUES(2,'CODING');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO DEPARTMENT VALUES(3,'TESTING');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> INSERT INTO DEPARTMENT VALUES(4,'RESEARCH');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> SELECT*FROM DEPARTMENT;
++---------+----------+
+| DEPT_ID | D_NAME   |
++---------+----------+
+|       1 | DESGN    |
+|       2 | CODING   |
+|       3 | TESTING  |
+|       4 | RESEARCH |
++---------+----------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE ADD FOREIGN KEY (DEPT_ID) REFERENCES DEPARTMENT(REFERNCING DEPT_ID IN DEPARTMENT);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DEPT_ID IN DEPARTMENT)' at line 1
+mysql> ALTER TABLE EMPLOYEE ADD FOREIGN KEY (DEPT_ID) REFERENCES DEPARTMENT(DEPT_ID);
+Query OK, 8 rows affected (2.13 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> DESC DEPARTMENT;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| DEPT_ID | int         | NO   | PRI | NULL    |       |
+| D_NAME  | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESC EMPLOYEE;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| ID           | varchar(5)  | NO   | PRI | NULL    |       |
+| DEPT_ID      | int         | YES  | MUL | NULL    |       |
+| NAME         | varchar(15) | YES  |     | NULL    |       |
+| DESIGN       | varchar(15) | YES  |     | NULL    |       |
+| BASIC        | int         | YES  |     | NULL    |       |
+| GENDER       | varchar(1)  | YES  |     | NULL    |       |
+| HRA          | int         | YES  |     | NULL    |       |
+| DA           | int         | YES  |     | NULL    |       |
+| NET_SALARY   | int         | YES  |     | NULL    |       |
+| MANAGER_ID   | int         | YES  |     | NULL    |       |
+| JOINING_DATE | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+11 rows in set (0.01 sec)
+
+mysql> SELET EMPLOYEE.NAME,DEPARTMENT.D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELET EMPLOYEE.NAME,DEPARTMENT.D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DE' at line 1
+mysql> SELET EMPLOYEE.NAME,DEPARTMENT.D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DEPT_ID = DEPARTMENT.DEPT_ID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELET EMPLOYEE.NAME,DEPARTMENT.D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DE' at line 1
+mysql> SELET EMPLOYEE.NAME,DEPARTMENT.D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DEPT_ID = DEPARTMENT.DEPT_ID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELET EMPLOYEE.NAME,DEPARTMENT.D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DE' at line 1
+mysql> SELECT NAME,D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT-ID;
+ERROR 1054 (42S22): Unknown column 'DEPARTMENT.DEPT' in 'where clause'
+mysql> SELECT NAME,D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID;
++---------+----------+
+| NAME    | D_NAME   |
++---------+----------+
+| RAM     | DESGN    |
+| RUBY    | DESGN    |
+| ARUN    | CODING   |
+| MRIDULA | CODING   |
+| KIRAN   | CODING   |
+| MARY    | TESTING  |
+| MENON   | RESEARCH |
+| TIM     | RESEARCH |
++---------+----------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.NAME='ARUN' AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID;
++--------+
+| D_NAME |
++--------+
+| CODING |
++--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT BASIC FROM EMPLOYEE,DEPARTMENT WHERE D_NAME='DESIGN' AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID;
+Empty set (0.00 sec)
+
+mysql> SELECT BASIC FROM EMPLOYEE,DEPARTMENT WHERE DEPARTMENT.D_NAME='DESIGN' AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID;
+Empty set (0.00 sec)
+
+mysql> SELECT BASIC FROM EMPLOYEE,DEPARTMENT WHERE D_NAME='DESGN' AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID;
++-------+
+| BASIC |
++-------+
+|  2000 |
+|  2010 |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT BASIC FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DESIGN='TYPIST' AND DEPARTMENT.D_NAME='DESGN' AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID;
++-------+
+| BASIC |
++-------+
+|  2000 |
+|  2010 |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DESIGN='TYPIST' AND DEPARTMENT.D_NAME='DESGN' AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID;
++-----+---------+------+--------+-------+--------+------+------+------------+------------+--------------+---------+--------+
+| ID  | DEPT_ID | NAME | DESIGN | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE | DEPT_ID | D_NAME |
++-----+---------+------+--------+-------+--------+------+------+------------+------------+--------------+---------+--------+
+| 101 |       1 | RAM  | TYPIST |  2000 | M      | 1000 | 1500 |       4500 |       NULL | 2017-12-17   |       1 | DESGN  |
+| 121 |       1 | RUBY | TYPIST |  2010 | F      | 1000 | 1508 |       4518 |        101 | 2015-01-23   |       1 | DESGN  |
++-----+---------+------+--------+-------+--------+------+------+------------+------------+--------------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT BASIC FROM EMPLOYEE,DEPARTMENT WHERE DEPARTMENT.D_NAME='RESEARCH' AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID;
++-------+
+| BASIC |
++-------+
+|  1500 |
+|  1500 |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.GENDER='F'AND DEPARTMENT.D_NAME='TESTING' AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID;
++------+
+| NAME |
++------+
+| MARY |
++------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID and D_NAME NOT IN('TESTING','CODING');
++-----+---------+-------+--------+-------+--------+------+------+------------+------------+--------------+---------+----------+
+| ID  | DEPT_ID | NAME  | DESIGN | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE | DEPT_ID | D_NAME   |
++-----+---------+-------+--------+-------+--------+------+------+------------+------------+--------------+---------+----------+
+| 101 |       1 | RAM   | TYPIST |  2000 | M      | 1000 | 1500 |       4500 |       NULL | 2017-12-17   |       1 | DESGN    |
+| 121 |       1 | RUBY  | TYPIST |  2010 | F      | 1000 | 1508 |       4518 |        101 | 2015-01-23   |       1 | DESGN    |
+| 114 |       4 | MENON | CLERK  |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-16   |       4 | RESEARCH |
+| 115 |       4 | TIM   | CLERK  |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-17   |       4 | RESEARCH |
++-----+---------+-------+--------+-------+--------+------+------+------------+------------+--------------+---------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.BASIC IN(SELET MAX(BASIC) FROM EMPLOYEE AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MAX(BASIC) FROM EMPLOYEE AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID' at line 1
+mysql> SELECT D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.BASIC IN(SELET MAX(BASIC) FROM EMPLOYEE AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID^[[D^[[D^[[D^[[D^[[D^[[D^[[D^[[D^[[D^[[D^[[D^[[D^[[D^[[D^[[D^[[ 
+
+^C
+mysql> SELECT D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.BASIC IN(SELET MAX(BASIC) FROM EMPLOYEE) AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MAX(BASIC) FROM EMPLOYEE) AND EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID' at line 1
+mysql> SELECT D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID AND EMPLOYEE.BASIC IN(SELET MAX(BASIC) FROM EMPLOYEE);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MAX(BASIC) FROM EMPLOYEE)' at line 1
+mysql> SELECT D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID AND EMPLOYEE.BASIC IN(SELECT MAX(BASIC) FROM EMPLOYEE);
++--------+
+| D_NAME |
++--------+
+| CODING |
+| CODING |
++--------+
+2 rows in set (0.02 sec)
+
+mysql> SELECT D_NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.DEPT_ID=DEPARTMENT.DEPT_ID AND EMPLOYEE.BASIC IN(SELECT MIN(BASIC) FROM EMPLOYEE);
++----------+
+| D_NAME   |
++----------+
+| RESEARCH |
+| RESEARCH |
++----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT MAX(BASIC) FROM Employee WHERE BASIC < (SELECT MAX(BASIC) FROM Employee); 
+ERROR 1146 (42S02): Table 'abitha.Employee' doesn't exist
+mysql> SELECT MAX(BASIC) FROM EMPLOYEE WHERE BASIC < (SELECT MAX(BASIC) FROM EMPLOYEE);
++------------+
+| MAX(BASIC) |
++------------+
+|       4500 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(BASIC) FROM EMPLOYEE WHERE BASIC > (SELECT MAX(BASIC) FROM EMPLOYEE);
++------------+
+| MIN(BASIC) |
++------------+
+|       NULL |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(BASIC) FROM EMPLOYEE WHERE BASIC > (SELECT MIN(BASIC) FROM EMPLOYEE);
++------------+
+| MIN(BASIC) |
++------------+
+|       2000 |
++------------+
+1 row in set (0.00 sec)
+
+

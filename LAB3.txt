@@ -1,0 +1,474 @@
+[sudo] password for student: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.34-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> view tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'view tables' at line 1
+mysql> view databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'view databases' at line 1
+mysql> use abitha;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select*from employee;
+ERROR 1146 (42S02): Table 'abitha.employee' doesn't exist
+mysql> SELECT* FROM EMPLOYEE;
++-----+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| ID  | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE |
++-----+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+| 101 |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL | 2017-12-17   |
+| 102 |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 | 2017-12-20   |
+| 114 |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-16   |
+| 115 |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-17   |
+| 121 |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 | 2015-01-23   |
+| 123 |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 | 2020-09-16   |
+| 127 |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 | 2019-12-17   |
+| 156 |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 | 2020-05-10   |
++-----+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+
+8 rows in set (0.01 sec)
+
+mysql> SELECT* FROM DEPARTMENT;
++---------+----------+
+| DEPT_ID | D_NAME   |
++---------+----------+
+|       1 | DESGN    |
+|       2 | CODING   |
+|       3 | TESTING  |
+|       4 | RESEARCH |
++---------+----------+
+4 rows in set (0.02 sec)
+
+mysql> SELECT DEPT_ID,COUNT(*) AS NUMBER_OF_EMPLOYEES FROM EMPLOYEE GROUP BY DEPT_ID;
++---------+---------------------+
+| DEPT_ID | NUMBER_OF_EMPLOYEES |
++---------+---------------------+
+|       1 |                   2 |
+|       2 |                   3 |
+|       3 |                   1 |
+|       4 |                   2 |
++---------+---------------------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT DEPT_ID,NUMBER FROM(SELECT DEPT_ID,COUNT(*) AS NUMBER_OF_EMPLOYEES FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE NUMBER>3;
+ERROR 1054 (42S22): Unknown column 'NUMBER' in 'field list'
+mysql> SELECT DEPT_ID,NUMBER FROM(SELECT DEPT_ID,COUNT(*) AS NUMBER FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE NUMBER>3;
+Empty set (0.00 sec)
+
+mysql> SELECT DEPT_ID,NUMBER FROM(SELECT DEPT_ID,COUNT(*) AS NUMBER FROM EMPLOYEE GROUP BY BASIC) AS X WHERE NUMBER>2500;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'abitha.EMPLOYEE.DEPT_ID' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT DEPT_ID,LOWEST_SALARY FROM(SELECT DEPT_ID,MIN(BASIC) AS LOWEST_SALARY FROM EMPLOYEE ) AS X WHERE NUMBER>2500;
+ERROR 1054 (42S22): Unknown column 'NUMBER' in 'where clause'
+mysql> SELECT DEPT_ID,LOWEST_SALARY FROM(SELECT DEPT_ID,MIN(BASIC) AS LOWEST_SALARY FROM EMPLOYEE ) AS X WHERE LOWEST_SALARY>2500;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'abitha.EMPLOYEE.DEPT_ID'; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT DEPT_ID,LOWEST_SALARY FROM(SELECT DEPT_ID,MIN(BASIC) AS LOWEST_SALARY FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE LOWEST_SALARY>2500;
++---------+---------------+
+| DEPT_ID | LOWEST_SALARY |
++---------+---------------+
+|       2 |          4000 |
+|       3 |          4500 |
++---------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT DEPT_ID,LOWEST_SALARY FROM(SELECT DEPT_ID,MIN(BASIC) AS LOWEST_SALARY FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE LOWEST_SALARY>2500;
++---------+---------------+
+| DEPT_ID | LOWEST_SALARY |
++---------+---------------+
+|       2 |          4000 |
+|       3 |          4500 |
++---------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT NAME FROM(SELECT DEPT_ID,MAX(BASIC)  FROM EMPLOYEE GROUP BY DEPT_ID);
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT DEPT_ID,NAME,SALARY FROM(SELECT DEPT_ID,MAX(BASIC) AS SALARY  FROM EMPLOYEE GROUP BY DEPT_ID);
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT DEPT_ID,NAME,SALARY FROM(SELECT DEPT_ID,MAX(BASIC) AS SALARY  FROM EMPLOYEE GROUP BY DEPT_ID);
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT NAME FROM(SELECT DEPT_ID,MAX(BASIC) AS X  FROM EMPLOYEE GROUP BY DEPT_ID);
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT ENAME FROM(SELECT DEPT_ID,MAX(BASIC) AS ENAME FROM EMPLOYEE GROUP BY DEPT_ID);
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT NAME FROM EMPLOYEE,(SELECT DEPT_ID,MAX(BASIC) AS HIGH FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE X.DEPT_ID = EMPLOYEE.DEPT_ID AND BASIC=HIGH;
++---------+
+| NAME    |
++---------+
+| ARUN    |
+| MENON   |
+| TIM     |
+| RUBY    |
+| MRIDULA |
+| MARY    |
++---------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE VIEW COUNT AS SELECT DEPT_ID,COUNT(*) AS COUNT FROM EMPLOYEE GROUP BY DEPT_ID;
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> SELECT D_NAME FROM DEPARTMENT WHERE DEPT_ID=(SELECT DEPT_ID FROM COUNT WHERE COUNT=(SELECT MIN(COUNT) FROM COUNT));
++---------+
+| D_NAME  |
++---------+
+| TESTING |
++---------+
+1 row in set (0.02 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE,(SELECT DEPT_ID,AVG(BASIC) AS AVG FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE X.DEPT_ID = EMPLOYEE.DEPT_ID AND BASIC>AVG;
++---------+
+| NAME    |
++---------+
+| ARUN    |
+| RUBY    |
+| MRIDULA |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE,(SELECT DEPT_ID,AVG(BASIC) AS AVRG FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE X.DEPT_ID = EMPLOYEE.DEPT_ID AND BASIC=AVRG;
++-------+
+| NAME  |
++-------+
+| MENON |
+| TIM   |
+| MARY  |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE,(SELECT DEPT_ID,AVG(BASIC) AS AVRG FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE X.DEPT_ID = EMPLOYEE.DEPT_ID AND BASIC>AVRG;
++---------+
+| NAME    |
++---------+
+| ARUN    |
+| RUBY    |
+| MRIDULA |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE IN(SELECT DEPT_ID,AVG(BASIC) AS AVRG FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE X.DEPT_ID = EMPLOYEE.DEPT_ID AND BASIC>AVRG;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IN(SELECT DEPT_ID,AVG(BASIC) AS AVRG FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE ' at line 1
+mysql> SELECT DISTINCT NAME FROM EMPLOYEE,(SELECT BASIC AS SAL FROM EMPLOYEE WHERE NAME IN('MENON','TIM')) AS X WHERE BASIC>X.SAL;
++---------+
+| NAME    |
++---------+
+| RAM     |
+| ARUN    |
+| RUBY    |
+| MRIDULA |
+| KIRAN   |
+| MARY    |
++---------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT NAME FROM EMPLOYEE,(SELECT DEPT_ID,AVG(BASIC) AS AVG FROM EMPLOYEE GROUP BY DEPT_ID) WHERE AS X WHERE BASIC>X.AVG;
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT  NAME FROM EMPLOYEE,(SELECT DEPT_ID,AVG(BASIC) AS AVG FROM EMPLOYEE GROUP BY DEPT_ID) WHERE AS X WHERE BASIC>X.AVG;
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT  NAME FROM EMPLOYEE,(SELECT DEPT_ID,AVG(BASIC) AS AVRG FROM EMPLOYEE GROUP BY DEPT_ID) WHERE AS X WHERE BASIC>X.AVRG;
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT  NAME FROM EMPLOYEE,(SELECT DEPT_ID,AVG(BASIC) AS AVRG FROM EMPLOYEE GROUP BY DEPT_ID) WHERE AS X WHERE BASIC>AVRG;
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> SELECT  NAME FROM EMPLOYEE,(SELECT DEPT_ID,AVG(BASIC) AS AVRG FROM EMPLOYEE GROUP BY DEPT_ID)  AS X WHERE BASIC>AVRG;
++---------+
+| NAME    |
++---------+
+| MARY    |
+| KIRAN   |
+| MRIDULA |
+| RUBY    |
+| ARUN    |
+| MRIDULA |
+| ARUN    |
+| MRIDULA |
+| ARUN    |
+| MARY    |
+| KIRAN   |
+| MRIDULA |
+| RUBY    |
+| ARUN    |
+| RAM     |
++---------+
+15 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT NAME FROM EMPLOYEE,(SELECT DEPT_ID,AVG(BASIC) AS AVRG FROM EMPLOYEE GROUP BY DEPT_ID)  AS X WHERE BASIC>AVRG;
++---------+
+| NAME    |
++---------+
+| MARY    |
+| KIRAN   |
+| MRIDULA |
+| RUBY    |
+| ARUN    |
+| RAM     |
++---------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT NAME FROM EMPLOYEE,(SELECT BASIC AS SAL FROM EMPLOYEE WHERE NAME='RAM') AS X,(SELECT BASIC AS SAL FROM EMPLOYEE WHERE NAME ='MARY') AS Y WHERE BASIC>X.SAL AND BASIC<Y.SAL;
++-------+
+| NAME  |
++-------+
+| RUBY  |
+| KIRAN |
++-------+
+2 rows in set (0.01 sec)
+
+mysql> ALTER TABLE EMPLYEE ADD(CITY VARCHAR(15));
+ERROR 1146 (42S02): Table 'abitha.EMPLYEE' doesn't exist
+mysql> ALTER TABLE EMPLOYEE ADD(CITY VARCHAR(15));
+Query OK, 0 rows affected (0.47 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEE;
++-----+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+------+
+| ID  | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE | CITY |
++-----+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+------+
+| 101 |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL | 2017-12-17   | NULL |
+| 102 |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 | 2017-12-20   | NULL |
+| 114 |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-16   | NULL |
+| 115 |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-17   | NULL |
+| 121 |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 | 2015-01-23   | NULL |
+| 123 |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 | 2020-09-16   | NULL |
+| 127 |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 | 2019-12-17   | NULL |
+| 156 |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 | 2020-05-10   | NULL |
++-----+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE DEPARTENT ADD (CITY VARCHAR(15));
+ERROR 1146 (42S02): Table 'abitha.DEPARTENT' doesn't exist
+mysql> ALTER TABLE DEPARTMENT ADD (CITY VARCHAR(15));
+Query OK, 0 rows affected (0.41 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE,DEPARTMENT SET CITY='TVM' WHERE DEPT_ID='1';
+ERROR 1052 (23000): Column 'DEPT_ID' in where clause is ambiguous
+mysql> UPDATE EMPLOYEE SET CITY='TVM' WHERE DEPT_ID='1';
+Query OK, 2 rows affected (0.07 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET CITY='EKM' WHERE DEPT_ID='2';
+Query OK, 3 rows affected (0.12 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET CITY='IDK' WHERE DEPT_ID='3';
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET CITY='KTM' WHERE DEPT_ID='4';
+Query OK, 2 rows affected (0.10 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> UPDATE DEPARTMENT SET CITY='KTM' WHERE DEPT_ID='4';
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM DEPARTMNET;
+ERROR 1146 (42S02): Table 'abitha.DEPARTMNET' doesn't exist
+mysql> SELECT * FROM DEPARTMENT;
++---------+----------+------+
+| DEPT_ID | D_NAME   | CITY |
++---------+----------+------+
+|       1 | DESGN    | NULL |
+|       2 | CODING   | NULL |
+|       3 | TESTING  | NULL |
+|       4 | RESEARCH | KTM  |
++---------+----------+------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE DEPARTMENT SET CITY='IDK' WHERE DEPT_ID='3';
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE DEPARTMENT SET CITY='EKM' WHERE DEPT_ID='2';
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE DEPARTMENT SET CITY='TVM' WHERE DEPT_ID='1';
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM DEPARTMENT;
++---------+----------+------+
+| DEPT_ID | D_NAME   | CITY |
++---------+----------+------+
+|       1 | DESGN    | TVM  |
+|       2 | CODING   | EKM  |
+|       3 | TESTING  | IDK  |
+|       4 | RESEARCH | KTM  |
++---------+----------+------+
+4 rows in set (0.01 sec)
+
+mysql> UPDATE EMPLOYEE SET CITY='PLKD' WHERE ID='RUBY';
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET CITY='PLKD' WHERE ID='121';
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET CITY='KOLLAM' WHERE ID='115';
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET CITY='TVM' WHERE ID='123';
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET CITY='KZKD' WHERE ID='156';
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM DEPARTMENT;
++---------+----------+------+
+| DEPT_ID | D_NAME   | CITY |
++---------+----------+------+
+|       1 | DESGN    | TVM  |
+|       2 | CODING   | EKM  |
+|       3 | TESTING  | IDK  |
+|       4 | RESEARCH | KTM  |
++---------+----------+------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++-----+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+--------+
+| ID  | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE | CITY   |
++-----+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+--------+
+| 101 |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL | 2017-12-17   | TVM    |
+| 102 |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 | 2017-12-20   | EKM    |
+| 114 |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-16   | KTM    |
+| 115 |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-17   | KOLLAM |
+| 121 |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 | 2015-01-23   | PLKD   |
+| 123 |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 | 2020-09-16   | TVM    |
+| 127 |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 | 2019-12-17   | EKM    |
+| 156 |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 | 2020-05-10   | KZKD   |
++-----+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+--------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.CITY=DEPARTMENT.CITY;
++---------+
+| NAME    |
++---------+
+| RAM     |
+| ARUN    |
+| MENON   |
+| MRIDULA |
+| KIRAN   |
++---------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET CITY='KSD' WHERE ID='123';
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEE;
++-----+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+--------+
+| ID  | DEPT_ID | NAME    | DESIGN  | BASIC | GENDER | HRA  | DA   | NET_SALARY | MANAGER_ID | JOINING_DATE | CITY   |
++-----+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+--------+
+| 101 |       1 | RAM     | TYPIST  |  2000 | M      | 1000 | 1500 |       4500 |       NULL | 2017-12-17   | TVM    |
+| 102 |       2 | ARUN    | ANALYST |  6000 | M      | 1000 | 4500 |      11500 |        101 | 2017-12-20   | EKM    |
+| 114 |       4 | MENON   | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-16   | KTM    |
+| 115 |       4 | TIM     | CLERK   |  1500 | M      | 1000 | 1125 |       3625 |        102 | 2018-09-17   | KOLLAM |
+| 121 |       1 | RUBY    | TYPIST  |  2010 | F      | 1000 | 1508 |       4518 |        101 | 2015-01-23   | PLKD   |
+| 123 |       2 | MRIDULA | ANALYST |  6000 | F      | 1000 | 4500 |      11500 |        102 | 2020-09-16   | KSD    |
+| 127 |       2 | KIRAN   | MANAGER |  4000 | M      | 1000 | 3000 |       8000 |        121 | 2019-12-17   | EKM    |
+| 156 |       3 | MARY    | MANAGER |  4500 | F      | 1000 | 3375 |       8875 |        101 | 2020-05-10   | KZKD   |
++-----+---------+---------+---------+-------+--------+------+------+------------+------------+--------------+--------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE,DEPARTMENT WHERE EMPLOYEE.CITY=DEPARTMENT.CITY;
++-------+
+| NAME  |
++-------+
+| RAM   |
+| ARUN  |
+| MENON |
+| KIRAN |
++-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT D_NAME FROM DEPATMENT,(SELECT DEPT_ID,MIN(BASIC) FROM EMPLOYEE GROUPT BY DEPT_ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'BY DEPT_ID)' at line 1
+mysql> SELECT NAME FROM EMPLOYEE WHERE JOINING_DATE BETWEEN '2018-01-01' AND '2018-12-31';
++-------+
+| NAME  |
++-------+
+| MENON |
+| TIM   |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE,(SELECT DEPT_ID, AVG(BASIC) AS AVRG ORDER BY DEPT_ID) AS X WHERE BASIC>AVRG;
+ERROR 1054 (42S22): Unknown column 'DEPT_ID' in 'field list'
+mysql> SELECT NAME FROM EMPLOYEE(SELECT DEPT_ID,AVG(BASIC) AS AVRG ORDER BY DEPT_ID) AS X WHERE BASIC>AVRG;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(SELECT DEPT_ID,AVG(BASIC) AS AVRG ORDER BY DEPT_ID) AS X WHERE BASIC>AVRG' at line 1
+mysql> SELECT NAME FROM EMPLOYEE(SELECT DEPT_ID,NAME ORDER BY DEPT_ID) AS X WHERE BASIC>AVG(BASIC);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(SELECT DEPT_ID,NAME ORDER BY DEPT_ID) AS X WHERE BASIC>AVG(BASIC)' at line 1
+mysql> SELECT NAME FROM EMPLOYEE(SELECT DEPT_ID,AVG(BASIC) AS AVRG  GROUP BY DEPT_ID) AS X WHERE BASIC>AVRG;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(SELECT DEPT_ID,AVG(BASIC) AS AVRG  GROUP BY DEPT_ID) AS X WHERE BASIC>AVRG' at line 1
+mysql> SELECT NAME FROM EMPLOYEE,(SELECT DEPT_ID,AVG(BASIC) AS AVRG  GROUP BY DEPT_ID) AS X WHERE BASIC>AVRG;
+ERROR 1054 (42S22): Unknown column 'DEPT_ID' in 'field list'
+mysql> SELECT NAME FROM EMPLOYEE,(SELECT DEPT_ID,AVG(BASIC) AS AVRG  GROUP BY DEPT_ID) AS X WHERE X.BASIC>AVRG;
+ERROR 1054 (42S22): Unknown column 'DEPT_ID' in 'field list'
+mysql> SELECT NAME FROM EMPLOYEE WHERE MONTHNAME(JOINING_DATE)='AUGUST';
+Empty set (0.00 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE WHERE MONTHNAME(JOINING_DATE)='DECEMBER';
++-------+
+| NAME  |
++-------+
+| RAM   |
+| ARUN  |
+| KIRAN |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *,NUMBER FROM(SELECT DEPT_ID,COUNT(*) AS NUMBER FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE NUMBER=0;
+Empty set (0.00 sec)
+
+mysql> SELECT *,NUMBER FROM(SELECT DEPT_ID,COUNT(*) AS NUMBER FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE NUMBER=2;
++---------+--------+--------+
+| DEPT_ID | NUMBER | NUMBER |
++---------+--------+--------+
+|       1 |      2 |      2 |
+|       4 |      2 |      2 |
++---------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *,NUMBER FROM(SELECT DEPT_ID,COUNT(*) AS NUMBER FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE NUMBER=3;
++---------+--------+--------+
+| DEPT_ID | NUMBER | NUMBER |
++---------+--------+--------+
+|       2 |      3 |      3 |
++---------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *,NUMBER FROM(SELECT DEPT_ID,COUNT(*) AS NUMBER FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE NUMBER=1;
++---------+--------+--------+
+| DEPT_ID | NUMBER | NUMBER |
++---------+--------+--------+
+|       3 |      1 |      1 |
++---------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *,NUMBER FROM(SELECT DEPT_ID,COUNT(*) AS NUMBER FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE NUMBER=0;
+Empty set (0.00 sec)
+
+mysql> SELECT *,NUMBER FROM(SELECT DEPT_ID,COUNT(*) AS NUMBER FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE NUMBER>2;
++---------+--------+--------+
+| DEPT_ID | NUMBER | NUMBER |
++---------+--------+--------+
+|       2 |      3 |      3 |
++---------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *,NAME,NUMBER FROM(SELECT DEPT_ID,COUNT(*) AS NUMBER FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE NUMBER>2;
+ERROR 1054 (42S22): Unknown column 'NAME' in 'field list'
+mysql> SELECT *,D_NAME,NUMBER FROM(SELECT DEPT_ID,COUNT(*) AS NUMBER FROM EMPLOYEE GROUP BY DEPT_ID) AS X WHERE NUMBER>2;
+ERROR 1054 (42S22
